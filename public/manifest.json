@@ -1,0 +1,19 @@
+{
+  "name": "Ace Elevate",
+  "short_name": "Ace Elevate",
+  "description": "AI Automation Studio. 8 specialized AI agents delivered through WhatsApp and Telegram. No new apps needed.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080707",
+  "theme_color": "#C48B68",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/src/assets/Logo_AceElevate.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"]
+}

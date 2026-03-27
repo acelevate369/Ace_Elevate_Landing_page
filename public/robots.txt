@@ -1,0 +1,13 @@
+# Ace Elevate - AI Automation Studio
+# https://aceelevate.vercel.app
+
+User-agent: *
+Allow: /
+Disallow: /node_modules/
+Disallow: /src/
+
+# Sitemap
+Sitemap: https://aceelevate.vercel.app/sitemap.xml
+
+# Crawl-delay (optional, be polite to bots)
+Crawl-delay: 1

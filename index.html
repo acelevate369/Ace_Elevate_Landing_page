@@ -1,21 +1,28 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="/src/assets/Logo_AceElevate.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Preconnect to critical third-party origins for speed -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
   <!-- Primary SEO -->
   <title>Ace Elevate | AI Automation Agents for WhatsApp & Telegram</title>
   <meta name="description"
-    content="Ace Elevate delivers AI automation through WhatsApp and Telegram. 8 specialized AI agents replace entire apps and workflows. No new apps, no UI, just intelligence." />
+    content="Ace Elevate delivers AI automation through WhatsApp and Telegram. 8 specialized AI agents replace entire apps and workflows. Stop working for your apps. No new tools, no UI, just intelligence." />
   <meta name="keywords"
-    content="AI automation, WhatsApp AI, Telegram AI, AI agents, business automation, email marketing AI, YouTube automation, SEO automation, lead generation, no-code AI, chatbot, AI assistant, habit tracker, financial tracker, content automation, Ace Elevate" />
+    content="AI automation, WhatsApp AI agent, Telegram AI bot, AI agents, business automation, email marketing AI, YouTube automation, SEO content automation, lead generation AI, no-code AI, AI chatbot, AI personal assistant, habit tracker AI, financial tracker, content automation, Ace Elevate, Kairi Kana, AI workforce, anti-app, invisible software, digital exhaustion, app fatigue solution" />
   <meta name="author" content="Ace Elevate" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="google-site-verification" content="H5cz5oFhs_BCNCnr4taXOoM-W8L-KMn3zqQ5QUZtd-U" />
   <link rel="canonical" href="https://aceelevate.vercel.app/" />
+
+  <!-- Web App Manifest (PWA signal) -->
+  <link rel="manifest" href="/manifest.json" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -24,6 +31,9 @@
   <meta property="og:description"
     content="Stop working for your apps. 8 AI agents that replace entire workflows, delivered through WhatsApp and Telegram. No new apps needed." />
   <meta property="og:image" content="https://aceelevate.vercel.app/src/assets/Logo_AceElevate.png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+  <meta property="og:image:alt" content="Ace Elevate logo" />
   <meta property="og:site_name" content="Ace Elevate" />
   <meta property="og:locale" content="en_US" />
 
@@ -34,21 +44,27 @@
   <meta name="twitter:description"
     content="Stop working for your apps. 8 AI agents that replace entire workflows, delivered through WhatsApp and Telegram." />
   <meta name="twitter:image" content="https://aceelevate.vercel.app/src/assets/Logo_AceElevate.png" />
+  <meta name="twitter:image:alt" content="Ace Elevate logo" />
 
-  <!-- Additional SEO -->
+  <!-- Additional SEO & Mobile -->
   <meta name="theme-color" content="#080707" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Ace Elevate" />
   <meta name="application-name" content="Ace Elevate" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="mobile-web-app-capable" content="yes" />
 
-  <!-- Structured Data / JSON-LD -->
+  <!-- Structured Data / JSON-LD: Organization -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Ace Elevate",
+      "alternateName": "Ace Elevate AI",
       "url": "https://aceelevate.vercel.app/",
       "logo": "https://aceelevate.vercel.app/src/assets/Logo_AceElevate.png",
-      "description": "AI Automation Studio delivering 8 specialized AI agents through WhatsApp and Telegram. No new apps, no UI, just intelligence.",
+      "description": "AI Automation Studio delivering 8 specialized AI agents through WhatsApp and Telegram. Stop working for your apps, let AI handle everything.",
       "sameAs": [
         "https://www.instagram.com/ace_elevate.ai",
         "https://www.tiktok.com/@acelevate.ai",
@@ -59,17 +75,116 @@
         "name": "Omega Yorha",
         "jobTitle": "Founder & CEO"
       },
-      "offers": {
-        "@type": "AggregateOffer",
-        "offerCount": "8",
-        "description": "8 AI automation agents: Kairi Kana, Siren, Brajadhenta, Valeria, Rhovayne, Asverath, Morneth, Solenne"
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://wa.me/6285753442122",
+        "availableLanguage": ["English", "Indonesian"]
       }
     }
-    </script>
+  </script>
+
+  <!-- Structured Data / JSON-LD: WebSite (enables Google Sitelinks Search) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Ace Elevate",
+      "url": "https://aceelevate.vercel.app/",
+      "description": "AI Automation Studio. 8 AI agents delivered through WhatsApp and Telegram.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ace Elevate"
+      }
+    }
+  </script>
+
+  <!-- Structured Data / JSON-LD: SoftwareApplication (rich product snippet) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Kairi Kana",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "WhatsApp, Telegram",
+      "description": "An Agentic AI powered by 16 specialized agents, from financial auditing to schedule mapping. Organize your life from your chat.",
+      "url": "https://kairikana.vercel.app/",
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ace Elevate"
+      }
+    }
+  </script>
+
+  <!-- Structured Data / JSON-LD: FAQ (rich snippets in SERP) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Ace Elevate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ace Elevate is an AI Automation Studio that delivers 8 specialized AI agents through WhatsApp and Telegram. Each agent replaces an entire app or workflow, so you never need to download another tool."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Ace Elevate work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our AI agents live inside WhatsApp and Telegram, platforms you already use daily. Simply chat with an agent and it handles the rest: from email marketing and YouTube automation to personal habit tracking and financial auditing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What AI agents does Ace Elevate offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ace Elevate offers 8 agents: Kairi Kana (personal AI assistant), Siren (email marketing), Brajadhenta (SEO blogging), Valeria (YouTube automation), Rhovayne (thread automation), Asverath (lead gen from micro-creators), Morneth (Google Maps lead gen), and Solenne (freelance appointment booking)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Ace Elevate free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can get started by contacting us through WhatsApp. We offer various plans for different needs. Visit our website and click Get Started to learn more."
+          }
+        }
+      ]
+    }
+  </script>
 </head>
 
 <body>
   <div id="root"></div>
+  <!-- Noscript fallback for SEO crawlers that don't run JS -->
+  <noscript>
+    <h1>Ace Elevate - AI Automation Studio</h1>
+    <p>Ace Elevate delivers AI automation through WhatsApp and Telegram. 8 specialized AI agents replace entire apps and
+      workflows. Stop working for your apps.</p>
+    <h2>Our AI Agents</h2>
+    <ul>
+      <li>Kairi Kana - Personal AI assistant with 16 specialized agents</li>
+      <li>Siren - AI email marketing engine</li>
+      <li>Brajadhenta - Auto-blogger for SEO content</li>
+      <li>Valeria - Full YouTube automation</li>
+      <li>Rhovayne - Thread automation for social platforms</li>
+      <li>Asverath - Micro-creator lead generation</li>
+      <li>Morneth - Google Maps lead generation</li>
+      <li>Solenne - Freelance appointment generation</li>
+    </ul>
+    <p>Contact us on WhatsApp: +6285753442122</p>
+  </noscript>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
