@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import ScrollReveal from '../components/ScrollReveal';
 
 const Footer = () => {
@@ -32,15 +33,24 @@ const Footer = () => {
             </ScrollReveal>
 
             <ScrollReveal variant="fade-up" delay={0.2}>
-                <div className="mt-24 md:mt-40 pt-8 border-t border-white/5 w-full flex flex-col md:flex-row justify-between items-center text-[10px] tracking-widest text-white/30 uppercase px-4 md:px-8 gap-4">
-                    <span>© {new Date().getFullYear()} Ace Elevate.</span>
-                    <div className="flex gap-6">
-                        <a href="https://www.instagram.com/ace_elevate.ai?igsh=MXBtNXNqMHpuajZhaQ==" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
-                        <a href="https://www.tiktok.com/@acelevate.ai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">TikTok</a>
-                        <a href="https://www.threads.com/@ace_elevate.ai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Threads</a>
-                        <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Twitter</a>
+                <div className="mt-24 md:mt-40 w-full">
+                    {/* Legal Links */}
+                    <div className="flex flex-wrap justify-center gap-6 mb-8 text-[10px] tracking-widest uppercase">
+                        <Link to="/privacy" className="text-white/30 hover:text-[#C48B68] transition-colors">Privacy Policy</Link>
+                        <Link to="/terms" className="text-white/30 hover:text-[#C48B68] transition-colors">Terms of Service</Link>
+                        <Link to="/refund" className="text-white/30 hover:text-[#C48B68] transition-colors">Refund Policy</Link>
                     </div>
-                    <span>Anti-App Protocol.</span>
+
+                    <div className="pt-8 border-t border-white/5 w-full flex flex-col md:flex-row justify-between items-center text-[10px] tracking-widest text-white/30 uppercase px-4 md:px-8 gap-4">
+                        <span>&copy; {new Date().getFullYear()} Ace Elevate.</span>
+                        <div className="flex gap-6">
+                            <a href="https://www.instagram.com/ace_elevate.ai?igsh=MXBtNXNqMHpuajZhaQ==" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
+                            <a href="https://www.tiktok.com/@acelevate.ai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">TikTok</a>
+                            <a href="https://www.threads.com/@ace_elevate.ai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Threads</a>
+                            <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Twitter</a>
+                        </div>
+                        <span>Anti-App Protocol.</span>
+                    </div>
                 </div>
             </ScrollReveal>
         </footer>
