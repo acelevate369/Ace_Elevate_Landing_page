@@ -12,14 +12,14 @@ const ALL_PRODUCTS = [
         url: 'https://kairikana.vercel.app/'
     },
     {
-        name: 'Siren',
+        name: 'Brajamusti',
         subtitle: 'SILENT OUTREACH, LOUD RESULTS',
         desc: 'AI email marketing engine. Crafts, personalizes, and sends campaigns that convert.',
         icon: <Send className="text-[#C48B68]" size={20} />,
         status: 'LIVE',
         gridClass: 'md:col-span-1 md:row-span-1',
         titleClass: 'text-2xl',
-        url: 'https://wa.me/6285753442122?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Agent%20Siren'
+        url: 'https://wa.me/6285753442122?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Agent%20Brajamusti'
     },
     {
         name: 'Brajadhenta',

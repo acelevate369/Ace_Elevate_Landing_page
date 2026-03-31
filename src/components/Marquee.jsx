@@ -11,7 +11,7 @@ const Marquee = () => {
                 {[...Array(2)].map((_, i) => (
                     <div key={i} className="flex items-center text-xs font-bold tracking-[0.3em] uppercase">
                         <span className="mx-8">Kairi Kana</span><span className="mx-2">•</span>
-                        <span className="mx-8">Siren</span><span className="mx-2">•</span>
+                        <span className="mx-8">Brajamusti</span><span className="mx-2">•</span>
                         <span className="mx-8">Brajadhenta</span><span className="mx-2">•</span>
                         <span className="mx-8">Valeria</span><span className="mx-2">•</span>
                         <span className="mx-8">Rhovayne</span><span className="mx-2">•</span>
