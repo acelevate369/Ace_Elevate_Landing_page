@@ -233,10 +233,10 @@ const AgentSlide = ({ agent, active, index, total }) => {
         </motion.span>
       </div>
 
-      <div className="relative z-10 w-full h-full max-w-screen-2xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between pb-12">
+      <div className="relative z-10 w-full h-full max-w-screen-2xl mx-auto px-6 lg:px-12 flex flex-col justify-end lg:flex-row lg:items-center lg:justify-between pb-12 lg:pb-12 pt-16 lg:pt-0">
         
         {/* Left: Dossier text (Left side) */}
-        <div className="w-full lg:w-[350px] flex-shrink-0 relative z-20 self-center lg:self-start mt-4 lg:mt-10">
+        <div className="w-full lg:w-[350px] flex-shrink-0 relative z-20 mt-auto lg:mt-10 self-center lg:self-start mb-6 lg:mb-0">
           <AnimatePresence mode="wait">
             {active && (
               <motion.div
