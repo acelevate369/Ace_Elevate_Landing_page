@@ -6,6 +6,7 @@ import Marquee from './components/Marquee';
 import PhilosophySection from './UI/PhilosophySection';
 import ArsenalSection from './UI/ArsenalSection';
 import FounderSection from './UI/FounderSection';
+import FAQSection from './UI/FAQSection';
 import Footer from './UI/Footer';
 import PrivacyPolicy from './UI/PrivacyPolicy';
 import TermsConditions from './UI/TermsConditions';
@@ -20,6 +21,7 @@ function LandingPage() {
       <PhilosophySection />
       <ArsenalSection />
       <FounderSection />
+      <FAQSection />
       <Footer />
     </>
   );

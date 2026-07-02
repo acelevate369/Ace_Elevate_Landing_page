@@ -23,8 +23,8 @@ const PrivacyPolicy = () => {
                     </div>
                     <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
                         <Lock className="text-[#C48B68] mb-3" size={24} />
-                        <h3 className="font-serif font-bold text-white mb-2">WhatsApp Security</h3>
-                        <p className="text-white/40 text-sm leading-relaxed">We leverage WhatsApp's end-to-end encryption infrastructure for message delivery, ensuring no middleman interception.</p>
+                        <h3 className="font-serif font-bold text-white mb-2">Telegram Security</h3>
+                        <p className="text-white/40 text-sm leading-relaxed">We leverage Telegram's end-to-end encryption infrastructure for message delivery, ensuring no middleman interception.</p>
                     </div>
                     <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
                         <Eye className="text-[#C48B68] mb-3" size={24} />
@@ -37,7 +37,7 @@ const PrivacyPolicy = () => {
                 <div className="space-y-10 text-white/60 leading-relaxed">
                     <section>
                         <h2 className="text-2xl font-serif font-bold text-white mb-4">1. Data Collection</h2>
-                        <p>We collect only what is necessary to function: your phone number (for WhatsApp identification), your email (for account management), and the text/images you voluntarily send to our AI agents.</p>
+                        <p>We collect only what is necessary to function: your phone number (for Telegram identification), your email (for account management), and the text/images you voluntarily send to our AI agents.</p>
                     </section>
 
                     <section>

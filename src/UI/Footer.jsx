@@ -23,12 +23,9 @@ const Footer = () => {
 
             <ScrollReveal variant="fade-up" delay={0.45}>
                 <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0">
-                    <a href="https://wa.me/6285753442122?text=Hello%2C%20I%20would%20like%20to%20get%20started%20with%20Ace%20Elevate" target="_blank" rel="noopener noreferrer" className="px-8 py-4 md:py-5 bg-[#C48B68] hover:bg-white text-black text-xs uppercase tracking-widest font-bold transition-colors flex items-center justify-center gap-3 rounded-full group">
-                        Start on WhatsApp <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    <a href="https://t.me/6285753442122" target="_blank" rel="noopener noreferrer" className="px-8 py-4 md:py-5 bg-[#C48B68] hover:bg-white text-black text-xs uppercase tracking-widest font-bold transition-colors flex items-center justify-center gap-3 rounded-full group">
+                        Start on Telegram <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </a>
-                    <button className="px-8 py-4 md:py-5 bg-transparent hover:bg-white/5 border border-white/20 rounded-full text-white text-xs uppercase tracking-widest font-bold transition-colors flex items-center justify-center gap-3">
-                        Start on Telegram
-                    </button>
                 </div>
             </ScrollReveal>
 

@@ -24,12 +24,12 @@ const RefundPolicy = () => {
                     <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
                         <ShieldCheck className="text-[#C48B68] mb-3" size={24} />
                         <h3 className="font-serif font-bold text-white mb-2">Secure Process</h3>
-                        <p className="text-white/40 text-sm leading-relaxed">Refunds are processed securely back to your original payment method. All processed via WhatsApp admin.</p>
+                        <p className="text-white/40 text-sm leading-relaxed">Refunds are processed securely back to your original payment method. All processed via Telegram admin.</p>
                     </div>
                     <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
                         <MessageCircle className="text-[#C48B68] mb-3" size={24} />
                         <h3 className="font-serif font-bold text-white mb-2">Contact Support</h3>
-                        <p className="text-white/40 text-sm leading-relaxed">To initiate a refund, simply reach out to our WhatsApp admin. We'll handle it promptly.</p>
+                        <p className="text-white/40 text-sm leading-relaxed">To initiate a refund, simply reach out to our Telegram admin. We'll handle it promptly.</p>
                     </div>
                 </div>
 
@@ -57,8 +57,8 @@ const RefundPolicy = () => {
                     <section>
                         <h2 className="text-2xl font-serif font-bold text-white mb-4">3. How to Request a Refund</h2>
                         <p>
-                            To start a refund request, please contact us via WhatsApp at{' '}
-                            <a href="https://wa.me/6285753442122?text=Hello%2C%20I%20would%20like%20to%20request%20a%20refund" target="_blank" rel="noopener noreferrer" className="text-[#C48B68] hover:text-white transition-colors">
+                            To start a refund request, please contact us via Telegram at{' '}
+                            <a href="https://t.me/6285753442122" target="_blank" rel="noopener noreferrer" className="text-[#C48B68] hover:text-white transition-colors">
                                 +62 857-5344-2122
                             </a>
                             {' '}or email us at{' '}

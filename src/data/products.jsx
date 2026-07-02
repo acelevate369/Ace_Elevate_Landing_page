@@ -19,7 +19,7 @@ const ALL_PRODUCTS = [
         status: 'LIVE',
         gridClass: 'md:col-span-1 md:row-span-1',
         titleClass: 'text-2xl',
-        url: 'https://wa.me/6285753442122?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Agent%20Brajamusti'
+        url: 'https://t.me/6285753442122'
     },
     {
         name: 'Brajadhenta',
@@ -29,7 +29,7 @@ const ALL_PRODUCTS = [
         status: 'LIVE',
         gridClass: 'md:col-span-1 md:row-span-1',
         titleClass: 'text-2xl',
-        url: 'https://wa.me/6285753442122?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Agent%20Brajadhenta'
+        url: 'https://t.me/6285753442122'
     },
     {
         name: 'Valeria',
@@ -39,7 +39,7 @@ const ALL_PRODUCTS = [
         status: 'LIVE',
         gridClass: 'md:col-span-2 md:row-span-1',
         titleClass: 'text-2xl',
-        url: 'https://wa.me/6285753442122?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Agent%20Valeria'
+        url: 'https://t.me/6285753442122'
     },
     {
         name: 'Rhovayne',

@@ -37,17 +37,17 @@ const TermsConditions = () => {
                 <div className="space-y-10 text-white/60 leading-relaxed">
                     <section>
                         <h2 className="text-2xl font-serif font-bold text-white mb-4">1. Acceptance of Terms</h2>
-                        <p>By accessing or using any Ace Elevate service via WhatsApp, Telegram, or our web interface, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the service.</p>
+                        <p>By accessing or using any Ace Elevate service via Telegram or our web interface, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the service.</p>
                     </section>
 
                     <section>
                         <h2 className="text-2xl font-serif font-bold text-white mb-4">2. Service Description</h2>
-                        <p>Ace Elevate is an AI Automation Studio providing 8 specialized AI agents through WhatsApp and Telegram. We reserve the right to modify, suspend, or discontinue the service at any time, though we will aim to provide reasonable notice.</p>
+                        <p>Ace Elevate is an AI Automation Studio providing 8 specialized AI agents through Telegram. We reserve the right to modify, suspend, or discontinue the service at any time, though we will aim to provide reasonable notice.</p>
                     </section>
 
                     <section>
                         <h2 className="text-2xl font-serif font-bold text-white mb-4">3. User Responsibilities</h2>
-                        <p>You are responsible for safeguarding the WhatsApp or Telegram account used to access the service. You agree not to reverse engineer the AI, attempt to bypass rate limits, or send malicious payloads to our infrastructure.</p>
+                        <p>You are responsible for safeguarding the Telegram account used to access the service. You agree not to reverse engineer the AI, attempt to bypass rate limits, or send malicious payloads to our infrastructure.</p>
                     </section>
 
                     <section>

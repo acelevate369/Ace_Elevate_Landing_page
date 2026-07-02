@@ -25,7 +25,7 @@ const PhilosophySection = () => {
             <StaggerReveal variant="scale" stagger={0.15} duration={0.7} className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {[
                     { num: "01", title: "App Fatigue is Real", stat: "80+", statDesc: "AVG APPS PER USER", desc: "80+ apps per person. Each one screams for attention. We believe the future isn't more software. It's invisible software." },
-                    { num: "02", title: "No UI, No Problem", stat: "0", statDesc: "LEARNING CURVE", desc: "Our agents live in WhatsApp & Telegram, platforms already in your muscle memory. Zero onboarding. Zero friction. Pure output." },
+                    { num: "02", title: "No UI, No Problem", stat: "0", statDesc: "LEARNING CURVE", desc: "Our agents live in Telegram, a platform already in your muscle memory. Zero onboarding. Zero friction. Pure output." },
                     { num: "03", title: "Automate, Don't Accumulate", stat: "100%", statDesc: "HANDS-FREE", desc: "We don't add tools to your stack. We replace entire workflows with silent intelligence that runs in the background while you live your life." }
                 ].map((item, i) => (
                     <SpotlightCard key={i} className="p-8 md:p-10 flex flex-col justify-between">
