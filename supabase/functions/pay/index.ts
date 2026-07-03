@@ -25,7 +25,7 @@ Deno.serve(async (req) => {
       throw new Error("Missing MIDTRANS_SERVER_KEY in edge function secrets");
     }
 
-    const midtransUrl = "https://app.sandbox.midtrans.com/snap/v1/transactions";
+    const midtransUrl = "https://app.midtrans.com/snap/v1/transactions";
 
     const parameter = {
       transaction_details: {

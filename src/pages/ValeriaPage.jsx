@@ -77,8 +77,8 @@ const ValeriaPage = () => {
 
     // Midtrans Snap
     const snapScript = document.createElement('script');
-    // Use sandbox url for testing, change to production later
-    snapScript.src = 'https://app.sandbox.midtrans.com/snap/snap.js';
+    // Use production url
+    snapScript.src = 'https://app.midtrans.com/snap/snap.js';
     snapScript.setAttribute('data-client-key', import.meta.env.VITE_MIDTRANS_CLIENT_KEY || '');
     snapScript.async = true;
     document.body.appendChild(snapScript);
