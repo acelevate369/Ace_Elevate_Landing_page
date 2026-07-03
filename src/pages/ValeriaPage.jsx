@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, CheckCircle2, Play, ChevronRight, Lock, X } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Play, ChevronRight, Lock, X, Loader2, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -59,6 +59,14 @@ const ValeriaPage = () => {
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddons, setSelectedAddons] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingTier, setLoadingTier] = useState(null);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'error' });
+  
+  const showToast = (message, type = 'error') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: '', type: 'error' }), 5000);
+  };
   
   const ADDONS = getAddons(lang);
 
@@ -90,6 +98,10 @@ const ValeriaPage = () => {
   }, []);
 
   const handleCheckout = async (packageType, price, name, additionalData = null) => {
+    if (isLoading) return;
+    setIsLoading(true);
+    setLoadingTier(packageType);
+
     if (lang === 'en') {
       // Lemon Squeezy
       let variantUrl = '';
@@ -102,6 +114,8 @@ const ValeriaPage = () => {
       } else {
         window.location.href = variantUrl;
       }
+      setIsLoading(false);
+      setLoadingTier(null);
     } else {
       // Midtrans ID
       // To create a robust integration, we trigger Supabase Edge Function to get Snap Token
@@ -138,16 +152,22 @@ const ValeriaPage = () => {
           });
         } else {
           console.error("No token received from backend:", data);
-          alert("Gagal menginisiasi pembayaran. Pastikan Edge Function dan Kredensial benar.");
+          showToast(t.errorInit);
         }
       } catch (err) {
         console.error("Checkout Error:", err);
-        alert("Terjadi kesalahan saat memanggil sistem pembayaran.");
+        showToast(t.errorSystem);
+      } finally {
+        setIsLoading(false);
+        setLoadingTier(null);
       }
     }
   };
 
   const t = {
+    loadingPayment: lang === 'id' ? 'Menyiapkan Jalur Aman...' : 'Securing Protocol...',
+    errorInit: lang === 'id' ? 'Gagal menginisiasi pembayaran. Mohon coba beberapa saat lagi.' : 'Failed to initialize payment. Please try again in a moment.',
+    errorSystem: lang === 'id' ? 'Terjadi gangguan sistem. Agen kami sedang menanganinya.' : 'System disruption detected. Our agents are working on it.',
     returnBase: lang === 'id' ? 'Kembali ke Markas' : 'Return to Base',
     classified: lang === 'id' ? 'Rahasia // Level 5' : 'Classified // Level 5',
     heroSubtitle: lang === 'id' ? 'Operasi Saluran Otomatis & SEO' : 'Automated Channel Operations & SEO',
@@ -249,6 +269,21 @@ const ValeriaPage = () => {
         </div>
       </nav>
 
+      {/* TOAST NOTIFICATION */}
+      <AnimatePresence>
+        {toast.show && (
+          <motion.div 
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] bg-[#080707] border border-[#C48B68]/30 px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 backdrop-blur-md"
+          >
+            <AlertCircle className="w-4 h-4 text-[#C48B68]" />
+            <span className="font-mono text-[10px] uppercase tracking-widest text-white/90">{toast.message}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* HERO SECTION */}
       <section className="relative w-full min-h-screen flex flex-col justify-end pb-20 lg:pb-32 pt-32 px-6 lg:px-12 overflow-hidden">
         
@@ -263,7 +298,7 @@ const ValeriaPage = () => {
                 animate={{ opacity: 0.85, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.05 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
-                className="absolute inset-0 w-full h-full object-cover object-center"
+                className="absolute inset-0 w-full h-full object-cover object-top md:object-center"
               />
             ) : (
               <motion.div
@@ -272,9 +307,9 @@ const ValeriaPage = () => {
                 animate={{ opacity: 0.85, filter: "blur(0px)", scale: 1 }}
                 exit={{ opacity: 0, filter: "blur(10px)", scale: 1.05 }}
                 transition={{ duration: 1.2, ease: "easeInOut" }}
-                className="absolute inset-0 z-0 flex items-end justify-center mix-blend-lighten pointer-events-none"
+                className="absolute inset-0 z-0 flex items-start pt-20 md:pt-0 md:items-end justify-center mix-blend-lighten pointer-events-none"
               >
-                <img src={heroSequence[currentHeroIdx].src} className="h-[85vh] lg:h-[90vh] w-auto object-contain object-bottom filter drop-shadow-[0_0_50px_rgba(196,139,104,0.15)] origin-bottom" />
+                <img src={heroSequence[currentHeroIdx].src} className="h-[65vh] md:h-[85vh] lg:h-[90vh] w-auto object-contain object-top md:object-bottom filter drop-shadow-[0_0_50px_rgba(196,139,104,0.15)] origin-bottom" />
               </motion.div>
             )}
           </AnimatePresence>
@@ -374,9 +409,14 @@ const ValeriaPage = () => {
               
               <button 
                 onClick={() => handleCheckout('core', t.tier1.price, t.tier1.name)}
-                className="w-full mt-auto py-4 rounded-xl border border-white/10 text-white font-mono text-xs tracking-widest uppercase hover:bg-white/5 transition-colors"
+                disabled={isLoading}
+                className="w-full mt-auto py-4 rounded-xl border border-white/10 text-white font-mono text-xs tracking-widest uppercase hover:bg-white/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {t.tier1.btn}
+                {isLoading && loadingTier === 'core' ? (
+                  <><Loader2 className="w-4 h-4 animate-spin" /> {t.loadingPayment}</>
+                ) : (
+                  t.tier1.btn
+                )}
               </button>
             </div>
           </motion.div>
@@ -491,10 +531,15 @@ const ValeriaPage = () => {
                   </div>
                   <button 
                     onClick={() => handleCheckout('ultimate', t.tier3.price, t.tier3.name)}
-                    className="group relative w-full overflow-hidden rounded-xl bg-[#C48B68] px-8 py-5 text-black font-mono text-sm font-bold tracking-widest uppercase hover:scale-[1.02] transition-transform duration-300 shadow-[0_0_20px_rgba(196,139,104,0.3)] hover:shadow-[0_0_40px_rgba(196,139,104,0.5)]"
+                    disabled={isLoading}
+                    className="group relative w-full overflow-hidden rounded-xl bg-[#C48B68] px-8 py-5 text-black font-mono text-sm font-bold tracking-widest uppercase hover:scale-[1.02] transition-transform duration-300 shadow-[0_0_20px_rgba(196,139,104,0.3)] hover:shadow-[0_0_40px_rgba(196,139,104,0.5)] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
                   >
                     <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full group-hover:animate-[shimmer_1s_forwards]" />
-                    {t.tier3.btn}
+                    {isLoading && loadingTier === 'ultimate' ? (
+                      <><Loader2 className="w-4 h-4 animate-spin" /> {t.loadingPayment}</>
+                    ) : (
+                      t.tier3.btn
+                    )}
                   </button>
                   <div className="mt-4 font-mono text-[9px] text-[#C48B68]/70 text-right w-full uppercase tracking-widest">
                     {t.tier3.note}
@@ -586,18 +631,21 @@ const ValeriaPage = () => {
                   {t.modal.cancel}
                 </button>
                   <button 
-                    disabled={selectedAddons.length === 0}
+                    disabled={selectedAddons.length === 0 || isLoading}
                     onClick={() => {
-                      setIsModalOpen(false);
-                      handleCheckout('standard', t.tier2.price, t.tier2.name, selectedAddons);
+                      if(!isLoading) handleCheckout('standard', t.tier2.price, t.tier2.name, selectedAddons);
                     }}
-                    className={`px-8 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-widest transition-all ${
-                      selectedAddons.length > 0 
+                    className={`px-8 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2 ${
+                      selectedAddons.length > 0 && !isLoading
                         ? "bg-[#C48B68] text-black hover:bg-white shadow-[0_0_20px_rgba(196,139,104,0.3)]" 
                         : "bg-white/10 text-white/30 cursor-not-allowed"
                     }`}
                   >
-                    {t.modal.confirm}
+                    {isLoading && loadingTier === 'standard' ? (
+                      <><Loader2 className="w-4 h-4 animate-spin" /> {t.loadingPayment}</>
+                    ) : (
+                      t.modal.confirm
+                    )}
                   </button>
               </div>
             </motion.div>
