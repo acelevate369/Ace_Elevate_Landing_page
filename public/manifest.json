@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/src/assets/Logo_AceElevate.png",
+      "src": "/Logo_AceElevate.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

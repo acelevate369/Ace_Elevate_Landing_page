@@ -1,4 +1,3 @@
-import logoAce from '../assets/Logo_AceElevate.png';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Navbar = () => {
@@ -15,7 +14,7 @@ const Navbar = () => {
         <nav className="fixed top-0 left-0 w-full px-4 md:px-8 py-3 md:py-4 flex justify-between items-center z-50 bg-[#080707]/80 backdrop-blur-md border-b border-white/5">
             <div className="flex items-center gap-3">
                 <div className="text-base md:text-xl font-bold tracking-widest text-white flex items-center gap-2.5">
-                    <img src={logoAce} alt="Ace Elevate - AI Automation Studio" className="w-8 h-8 md:w-9 md:h-9 object-contain rounded-full ring-1 ring-[#C48B68]/30" />
+                    <img src="/Logo_AceElevate.png" alt="Ace Elevate - AI Automation Studio" className="w-8 h-8 md:w-9 md:h-9 object-contain rounded-full ring-1 ring-[#C48B68]/30" />
                     ACE ELEVATE
                 </div>
             </div>

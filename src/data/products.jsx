@@ -47,7 +47,7 @@ export const getProducts = (lang) => [
         status: 'LIVE',
         gridClass: 'md:col-span-2 md:row-span-1',
         titleClass: 'text-2xl',
-        url: 'https://t.me/6285753442122'
+        url: '/valeria'
     },
     {
         name: 'Rhovayne',
