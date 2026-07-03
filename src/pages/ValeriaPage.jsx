@@ -57,6 +57,7 @@ const getAddons = (lang) => {
 const ValeriaPage = () => {
   const { lang } = useLanguage();
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingTier, setLoadingTier] = useState(null);
