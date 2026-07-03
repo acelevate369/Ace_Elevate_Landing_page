@@ -2,23 +2,32 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const faqs = [
+const getFaqs = (lang) => [
     {
-        question: "What is Ace Elevate?",
-        answer: "Ace Elevate is an AI Automation Studio that delivers 8 specialized AI agents through Telegram. Each agent replaces an entire app or workflow, so you never need to download another tool."
+        question: lang === 'id' ? "Apa itu Ace Elevate?" : "What is Ace Elevate?",
+        answer: lang === 'id' 
+            ? "Ace Elevate adalah Studio Otomatisasi AI yang memberikan 8 agen AI khusus melalui Telegram. Setiap agen menggantikan seluruh aplikasi atau alur kerja, sehingga Anda tidak perlu mengunduh alat lain."
+            : "Ace Elevate is an AI Automation Studio that delivers 8 specialized AI agents through Telegram. Each agent replaces an entire app or workflow, so you never need to download another tool."
     },
     {
-        question: "Why did you switch from WhatsApp to Telegram?",
-        answer: "We moved to Telegram due to WhatsApp's restrictions on running text-based Generative AI functions. Telegram provides the flexibility and API access we need to deliver our advanced AI agents effectively. In the future, we will research other chat apps we can utilize to expand our ecosystem."
+        question: lang === 'id' ? "Mengapa Anda beralih dari WhatsApp ke Telegram?" : "Why did you switch from WhatsApp to Telegram?",
+        answer: lang === 'id'
+            ? "Kami pindah ke Telegram karena pembatasan WhatsApp dalam menjalankan fungsi AI Generatif berbasis teks. Telegram memberikan fleksibilitas dan akses API yang kami butuhkan untuk memberikan agen AI canggih kami secara efektif. Di masa mendatang, kami akan meneliti aplikasi obrolan lain yang dapat kami manfaatkan untuk memperluas ekosistem kami."
+            : "We moved to Telegram due to WhatsApp's restrictions on running text-based Generative AI functions. Telegram provides the flexibility and API access we need to deliver our advanced AI agents effectively. In the future, we will research other chat apps we can utilize to expand our ecosystem."
     },
     {
-        question: "Do I need to download any new apps?",
-        answer: "No. All our AI agents operate directly within Telegram. You interact with them just like you would with any of your contacts—through simple chat messages."
+        question: lang === 'id' ? "Apakah saya perlu mengunduh aplikasi baru?" : "Do I need to download any new apps?",
+        answer: lang === 'id'
+            ? "Tidak. Semua agen AI kami beroperasi langsung di dalam Telegram. Anda berinteraksi dengan mereka seperti yang Anda lakukan dengan kontak Anda lainnya—melalui pesan obrolan sederhana."
+            : "No. All our AI agents operate directly within Telegram. You interact with them just like you would with any of your contacts—through simple chat messages."
     },
     {
-        question: "How do the agents save me time?",
-        answer: "Our agents automate repetitive tasks like email marketing, content creation, lead generation, and scheduling. By handling the heavy lifting, they free you up to focus on high-value work or simply enjoy more free time."
+        question: lang === 'id' ? "Bagaimana agen menghemat waktu saya?" : "How do the agents save me time?",
+        answer: lang === 'id'
+            ? "Agen kami mengotomatiskan tugas berulang seperti pemasaran email, pembuatan konten, perolehan prospek, dan penjadwalan. Dengan menangani pekerjaan berat, mereka membebaskan Anda untuk fokus pada pekerjaan bernilai tinggi atau sekadar menikmati lebih banyak waktu luang."
+            : "Our agents automate repetitive tasks like email marketing, content creation, lead generation, and scheduling. By handling the heavy lifting, they free you up to focus on high-value work or simply enjoy more free time."
     }
 ];
 
@@ -60,7 +69,14 @@ const FAQItem = ({ faq, isOpen, onClick }) => {
 };
 
 const FAQSection = () => {
+    const { lang } = useLanguage();
     const [openIndex, setOpenIndex] = useState(0);
+    const faqs = getFaqs(lang);
+
+    const t = {
+        tag: lang === 'id' ? 'Basis Pengetahuan' : 'Knowledge Base',
+        title: lang === 'id' ? 'Pertanyaan Umum' : 'Frequently Asked'
+    };
 
     return (
         <section className="py-24 md:py-32 px-6 bg-[#050505] relative overflow-hidden" id="faq">
@@ -69,8 +85,8 @@ const FAQSection = () => {
             <div className="max-w-4xl mx-auto relative z-10">
                 <ScrollReveal variant="fade-up">
                     <div className="text-center mb-16">
-                        <span className="text-[#C48B68] tracking-[0.2em] uppercase text-sm font-bold mb-4 block">Knowledge Base</span>
-                        <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tight mb-6">Frequently Asked</h2>
+                        <span className="text-[#C48B68] tracking-[0.2em] uppercase text-sm font-bold mb-4 block">{t.tag}</span>
+                        <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tight mb-6">{t.title}</h2>
                     </div>
                 </ScrollReveal>
 

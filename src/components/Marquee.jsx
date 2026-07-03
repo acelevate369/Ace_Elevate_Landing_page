@@ -1,6 +1,14 @@
 import { motion } from 'framer-motion';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Marquee = () => {
+    const { lang } = useLanguage();
+
+    const t = {
+        noApps: lang === 'id' ? 'Tanpa Aplikasi' : 'No Apps',
+        noUI: lang === 'id' ? 'Tanpa UI' : 'No UI',
+    };
+
     return (
         <div className="relative w-full overflow-hidden bg-transparent text-white/20 py-6 flex items-center border-y border-white/5 mt-10">
             <motion.div
@@ -18,8 +26,8 @@ const Marquee = () => {
                         <span className="mx-8">Asverath</span><span className="mx-2">•</span>
                         <span className="mx-8">Morneth</span><span className="mx-2">•</span>
                         <span className="mx-8">Solenne</span><span className="mx-2">•</span>
-                        <span className="mx-8">No Apps</span><span className="mx-2">•</span>
-                        <span className="mx-8">No UI</span><span className="mx-2">•</span>
+                        <span className="mx-8">{t.noApps}</span><span className="mx-2">•</span>
+                        <span className="mx-8">{t.noUI}</span><span className="mx-2">•</span>
                     </div>
                 ))}
             </motion.div>

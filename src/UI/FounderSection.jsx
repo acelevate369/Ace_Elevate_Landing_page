@@ -1,12 +1,23 @@
 import { Quote } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import SpotlightCard from '../components/SpotlightCard';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const FounderSection = () => {
+    const { lang } = useLanguage();
+
+    const t = {
+        tag: lang === 'id' ? 'Pendiri' : 'The Founder',
+        quote: lang === 'id' 
+            ? <>"Saya melihat dunia tenggelam dalam <span className="text-[#C48B68]">limbah aplikasi</span>. Tanpa disadari, umat manusia menjadi kelelahan oleh alat yang dimaksudkan untuk membebaskan mereka. Itulah sebabnya saya di sini, <span className="text-[#E5CDB3]">untuk meringankan beban Anda</span>."</>
+            : <>"I saw a world drowning in <span className="text-[#C48B68]">application waste</span>. Without realizing it, humanity had become exhausted by the very tools meant to free them. That's why I'm here, <span className="text-[#E5CDB3]">to lighten your burden</span>."</>,
+        role: lang === 'id' ? 'Pendiri & CEO' : 'Founder & CEO'
+    };
+
     return (
         <section id="founder" className="py-24 md:py-40 px-4 md:px-6 relative flex flex-col items-center justify-center text-center" aria-label="The Founder">
             <ScrollReveal variant="fade-up">
-                <p className="text-[#C48B68] tracking-[0.3em] text-[10px] font-bold uppercase mb-12 md:mb-16">The Founder</p>
+                <p className="text-[#C48B68] tracking-[0.3em] text-[10px] font-bold uppercase mb-12 md:mb-16">{t.tag}</p>
             </ScrollReveal>
 
             <ScrollReveal variant="scale" duration={0.9} delay={0.15}>
@@ -35,7 +46,7 @@ const FounderSection = () => {
 
                         <ScrollReveal variant="blur-up" delay={0.5} duration={1}>
                             <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif font-bold leading-[1.3] text-white mb-8 md:mb-10 px-2 md:px-0">
-                                "I saw a world drowning in <span className="text-[#C48B68]">application waste</span>. Without realizing it, humanity had become exhausted by the very tools meant to free them. That's why I'm here, <span className="text-[#E5CDB3]">to lighten your burden</span>."
+                                {t.quote}
                             </h2>
                         </ScrollReveal>
 
@@ -43,7 +54,7 @@ const FounderSection = () => {
                             <div className="flex flex-col items-center justify-center gap-2">
                                 <div className="w-12 h-[1px] bg-[#C48B68]/50 mb-3"></div>
                                 <h3 className="text-lg md:text-xl font-serif font-bold text-white tracking-widest">Omega Yorha</h3>
-                                <p className="text-[10px] tracking-[0.3em] text-[#C48B68] uppercase font-bold">Founder & CEO</p>
+                                <p className="text-[10px] tracking-[0.3em] text-[#C48B68] uppercase font-bold">{t.role}</p>
                             </div>
                         </ScrollReveal>
                     </SpotlightCard>

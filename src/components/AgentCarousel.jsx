@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowRight, ChevronLeft, ChevronRight, Lock, Pause, Play } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useLanguage } from "../contexts/LanguageContext";
 
 // Asset imports
 import agentKairi from "../assets/agent-kairi.png";
@@ -15,15 +17,16 @@ import agentSolenne from "../assets/agent-solenne.png";
 
 const AUTOPLAY_MS = 6500;
 
-const agents = [
+const getAgents = (lang) => [
   {
     id: "001",
     codename: "KAIRI KANA",
-    specialty: "Personal Assistant",
-    tagline: "Kill The Chaos",
-    dossier:
-      "Your AI-driven personal operative. Tracks habits, monitors finances, reports directly to your chat. No dashboards. No noise.",
-    capabilities: ["Habit Tracking", "Financial Ops", "Chat-Native"],
+    specialty: lang === 'id' ? "Asisten Pribadi" : "Personal Assistant",
+    tagline: lang === 'id' ? "Bunuh Kekacauan" : "Kill The Chaos",
+    dossier: lang === 'id'
+      ? "Operatif pribadi bertenaga AI Anda. Melacak kebiasaan, memantau keuangan, melapor langsung ke chat Anda. Tanpa dashboard. Tanpa kebisingan."
+      : "Your AI-driven personal operative. Tracks habits, monitors finances, reports directly to your chat. No dashboards. No noise.",
+    capabilities: lang === 'id' ? ["Lacak Kebiasaan", "Ops Keuangan", "Chat-Native"] : ["Habit Tracking", "Financial Ops", "Chat-Native"],
     clearance: "TELEGRAM",
     image: agentKairi,
     status: "live",
@@ -31,11 +34,12 @@ const agents = [
   {
     id: "002",
     codename: "SIREN",
-    specialty: "Email Marketing",
-    tagline: "Silent Outreach, Loud Results",
-    dossier:
-      "Precision email operative. Crafts, personalizes, and deploys campaigns designed to turn cold contacts into loyal customers.",
-    capabilities: ["Cold Outreach", "Auto-Personalize", "Deploy at Scale"],
+    specialty: lang === 'id' ? "Pemasaran Email" : "Email Marketing",
+    tagline: lang === 'id' ? "Jangkauan Senyap, Hasil Nyaring" : "Silent Outreach, Loud Results",
+    dossier: lang === 'id'
+      ? "Operatif email presisi. Membuat, mempersonalisasi, dan menyebarkan kampanye yang dirancang untuk mengubah kontak dingin menjadi pelanggan setia."
+      : "Precision email operative. Crafts, personalizes, and deploys campaigns designed to turn cold contacts into loyal customers.",
+    capabilities: lang === 'id' ? ["Cold Outreach", "Auto-Personalisasi", "Sebarkan Skala Besar"] : ["Cold Outreach", "Auto-Personalize", "Deploy at Scale"],
     clearance: "EMAIL / SMTP",
     image: agentSiren,
     status: "live",
@@ -43,11 +47,12 @@ const agents = [
   {
     id: "003",
     codename: "BRAJADHENTA",
-    specialty: "Content Automation",
-    tagline: "Write Once, Rank Forever",
-    dossier:
-      "Autonomous content operative. Researches trends, writes SEO-optimized articles, and publishes across your blog while you sleep.",
-    capabilities: ["Topic Research", "SEO Writing", "Auto-Publish"],
+    specialty: lang === 'id' ? "Otomatisasi Konten" : "Content Automation",
+    tagline: lang === 'id' ? "Tulis Sekali, Ranking Selamanya" : "Write Once, Rank Forever",
+    dossier: lang === 'id'
+      ? "Operatif konten otonom. Meneliti tren, menulis artikel optimasi SEO, dan mempublikasikan di blog Anda saat Anda tidur."
+      : "Autonomous content operative. Researches trends, writes SEO-optimized articles, and publishes across your blog while you sleep.",
+    capabilities: lang === 'id' ? ["Riset Topik", "Penulisan SEO", "Auto-Publish"] : ["Topic Research", "SEO Writing", "Auto-Publish"],
     clearance: "CMS / WORDPRESS",
     image: agentBrajadhenta,
     status: "live",
@@ -55,11 +60,12 @@ const agents = [
   {
     id: "004",
     codename: "VALERIA",
-    specialty: "YouTube Automation",
-    tagline: "Your Channel, Automated",
-    dossier:
-      "End-to-end video operative. Scripting, voice, visuals, scheduling — deploys a full content pipeline without human editing.",
-    capabilities: ["Script Gen", "Voice & Visuals", "Auto-Schedule"],
+    specialty: lang === 'id' ? "Otomatisasi YouTube" : "YouTube Automation",
+    tagline: lang === 'id' ? "Saluran Anda, Terotomatisasi" : "Your Channel, Automated",
+    dossier: lang === 'id'
+      ? "Operatif video end-to-end. Scripting, suara, visual, penjadwalan — mendistribusikan jalur konten penuh tanpa pengeditan manusia."
+      : "End-to-end video operative. Scripting, voice, visuals, scheduling — deploys a full content pipeline without human editing.",
+    capabilities: lang === 'id' ? ["Gen Skrip", "Suara & Visual", "Auto-Jadwal"] : ["Script Gen", "Voice & Visuals", "Auto-Schedule"],
     clearance: "YOUTUBE / STUDIO",
     image: agentValeria,
     status: "live",
@@ -67,11 +73,12 @@ const agents = [
   {
     id: "005",
     codename: "RHOVAYNE",
-    specialty: "Thread Automation",
-    tagline: "Threads That Convert",
-    dossier:
-      "Social intelligence operative. Generates viral thread content and deploys it at scale across Threads, X, and beyond.",
-    capabilities: ["Viral Ideation", "Thread Writing", "Scheduled Deploy"],
+    specialty: lang === 'id' ? "Otomatisasi Utas" : "Thread Automation",
+    tagline: lang === 'id' ? "Utas yang Mengkonversi" : "Threads That Convert",
+    dossier: lang === 'id'
+      ? "Operatif intelijen sosial. Menghasilkan konten utas viral dan menyebarkannya dalam skala besar di Threads, X, dan lainnya."
+      : "Social intelligence operative. Generates viral thread content and deploys it at scale across Threads, X, and beyond.",
+    capabilities: lang === 'id' ? ["Ideasi Viral", "Penulisan Utas", "Jadwal Sebar"] : ["Viral Ideation", "Thread Writing", "Scheduled Deploy"],
     clearance: "THREADS / X",
     image: agentRhovayne,
     status: "building",
@@ -79,11 +86,12 @@ const agents = [
   {
     id: "006",
     codename: "ASVERATH",
-    specialty: "Micro-Creator Leads",
-    tagline: "Micro Audiences, Macro Revenue",
-    dossier:
-      "Reconnaissance operative. Infiltrates niche creator communities, identifies, qualifies, and extracts high-intent leads.",
-    capabilities: ["Creator Discovery", "Qualification", "Data Extract"],
+    specialty: lang === 'id' ? "Prospek Kreator Mikro" : "Micro-Creator Leads",
+    tagline: lang === 'id' ? "Audiens Mikro, Pendapatan Makro" : "Micro Audiences, Macro Revenue",
+    dossier: lang === 'id'
+      ? "Operatif pengintaian. Menyusup ke komunitas kreator niche, mengidentifikasi, mengkualifikasi, dan mengekstrak prospek berniat tinggi."
+      : "Reconnaissance operative. Infiltrates niche creator communities, identifies, qualifies, and extracts high-intent leads.",
+    capabilities: lang === 'id' ? ["Pencarian Kreator", "Kualifikasi", "Ekstrak Data"] : ["Creator Discovery", "Qualification", "Data Extract"],
     clearance: "INSTAGRAM / TIKTOK",
     image: agentAsverath,
     status: "building",
@@ -91,11 +99,12 @@ const agents = [
   {
     id: "007",
     codename: "MORNETH",
-    specialty: "Maps Lead Generation",
-    tagline: "Map The Opportunity",
-    dossier:
-      "Geographic intelligence operative. Sweeps Google Maps for local businesses, extracts contact data, organizes leads by territory.",
-    capabilities: ["Geo Sweep", "Contact Extract", "Territory Map"],
+    specialty: lang === 'id' ? "Pembuatan Prospek Maps" : "Maps Lead Generation",
+    tagline: lang === 'id' ? "Petakan Peluang" : "Map The Opportunity",
+    dossier: lang === 'id'
+      ? "Operatif intelijen geografis. Menyapu Google Maps untuk bisnis lokal, mengekstrak data kontak, mengatur prospek berdasarkan wilayah."
+      : "Geographic intelligence operative. Sweeps Google Maps for local businesses, extracts contact data, organizes leads by territory.",
+    capabilities: lang === 'id' ? ["Sapu Geo", "Ekstrak Kontak", "Peta Wilayah"] : ["Geo Sweep", "Contact Extract", "Territory Map"],
     clearance: "GOOGLE MAPS API",
     image: agentMorneth,
     status: "building",
@@ -103,11 +112,12 @@ const agents = [
   {
     id: "008",
     codename: "SOLENNE",
-    specialty: "Appointment Generation",
-    tagline: "Book While You Sleep",
-    dossier:
-      "Booking operative for freelancers. Finds prospects, drafts pitches, handles replies, and books discovery calls autonomously.",
-    capabilities: ["Prospect Hunt", "Auto-Pitch", "Book Calls"],
+    specialty: lang === 'id' ? "Pembuatan Janji Temu" : "Appointment Generation",
+    tagline: lang === 'id' ? "Pesan Saat Anda Tidur" : "Book While You Sleep",
+    dossier: lang === 'id'
+      ? "Operatif pemesanan untuk pekerja lepas. Menemukan prospek, menyusun penawaran, menangani balasan, dan memesan panggilan penemuan secara otonom."
+      : "Booking operative for freelancers. Finds prospects, drafts pitches, handles replies, and books discovery calls autonomously.",
+    capabilities: lang === 'id' ? ["Buru Prospek", "Auto-Penawaran", "Pesan Panggilan"] : ["Prospect Hunt", "Auto-Pitch", "Book Calls"],
     clearance: "CALENDAR / CRM",
     image: agentSolenne,
     status: "building",
@@ -118,10 +128,13 @@ const agents = [
 // Slide 1: Manifesto Hero
 // ─────────────────────────────────────────────────────────────────────────────
 
-const words = ["Stop", "Working", "For", "Your", "Apps."];
+const getWords = (lang) => lang === 'id' 
+  ? ["Berhenti", "Bekerja", "Untuk", "Aplikasi", "Anda."]
+  : ["Stop", "Working", "For", "Your", "Apps."];
 
-const ManifestoSlide = ({ active }) => {
+const ManifestoSlide = ({ active, lang }) => {
   const [visibleCount, setVisibleCount] = useState(0);
+  const words = getWords(lang);
 
   useEffect(() => {
     if (!active) {
@@ -138,7 +151,7 @@ const ManifestoSlide = ({ active }) => {
       });
     }, 180);
     return () => clearInterval(interval);
-  }, [active]);
+  }, [active, words]);
 
   return (
     <div className="relative w-full h-full min-h-[100vh] flex items-center justify-center overflow-hidden bg-[#080707] pt-24">
@@ -165,7 +178,7 @@ const ManifestoSlide = ({ active }) => {
           </span>
         </motion.div>
 
-        <h1 className="text-6xl sm:text-7xl md:text-[8rem] lg:text-[11.4rem] font-serif font-extrabold leading-[0.85] tracking-tighter w-full">
+        <h1 className="text-5xl sm:text-7xl md:text-[8rem] lg:text-[11.4rem] font-serif font-extrabold leading-[0.85] tracking-tighter w-full">
           {words.map((word, i) => (
             <motion.span
               key={i}
@@ -177,7 +190,7 @@ const ManifestoSlide = ({ active }) => {
               }
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className={`inline-block mr-[0.2em] ${
-                word === "Apps." ? "text-transparent bg-clip-text bg-gradient-to-br from-[#C48B68] to-[#E5CDB3] drop-shadow-[0_0_20px_rgba(196,139,104,0.3)]" : "text-white"
+                i === words.length - 1 ? "text-transparent bg-clip-text bg-gradient-to-br from-[#C48B68] to-[#E5CDB3] drop-shadow-[0_0_20px_rgba(196,139,104,0.3)]" : "text-white"
               }`}
             >
               {word}
@@ -191,10 +204,10 @@ const ManifestoSlide = ({ active }) => {
           transition={{ duration: 1, delay: 1.4 }}
           className="text-base md:text-xl text-white/50 max-w-3xl mx-auto mt-12 mb-12 font-sans leading-relaxed"
         >
-          We deliver AI automation through{" "}
+          {lang === 'id' ? "Kami memberikan otomatisasi AI melalui " : "We deliver AI automation through "}
           <span className="text-[#C48B68] font-medium">Telegram</span>.
           <br className="hidden sm:block" />
-          No new apps. No UI. No fatigue. Just intelligence.
+          {lang === 'id' ? "Tanpa aplikasi baru. Tanpa UI. Tanpa kelelahan. Hanya kecerdasan murni." : "No new apps. No UI. No fatigue. Just intelligence."}
         </motion.p>
       </div>
     </div>
@@ -205,7 +218,7 @@ const ManifestoSlide = ({ active }) => {
 // Slides 2-9: Agent Dossier
 // ─────────────────────────────────────────────────────────────────────────────
 
-const AgentSlide = ({ agent, active, index, total }) => {
+const AgentSlide = ({ agent, active, index, total, lang }) => {
   const isLive = agent.status === "live";
 
   return (
@@ -250,7 +263,7 @@ const AgentSlide = ({ agent, active, index, total }) => {
                 {/* Meta line */}
                 <div className="flex items-center gap-4 mb-4 font-mono text-[9px] tracking-[0.3em] uppercase">
                   <span className="w-4 h-px bg-[#C48B68]" />
-                  <span className="text-white/50">Classified</span>
+                  <span className="text-white/50">{lang === 'id' ? 'Rahasia' : 'Classified'}</span>
                   <span className="text-white">// Agt {agent.id}</span>
                   <span
                     className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border ${
@@ -266,7 +279,7 @@ const AgentSlide = ({ agent, active, index, total }) => {
                           : "bg-[#E5CDB3]"
                       }`}
                     />
-                    {isLive ? "Deployed" : "In Training"}
+                    {isLive ? (lang === 'id' ? 'Beroperasi' : 'Deployed') : (lang === 'id' ? 'Dalam Latihan' : 'In Training')}
                   </span>
                 </div>
 
@@ -296,7 +309,7 @@ const AgentSlide = ({ agent, active, index, total }) => {
                 {/* Dossier */}
                 <div className="flex items-center gap-3 mb-2">
                   <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-white/50">
-                    Dossier
+                    {lang === 'id' ? 'Berkas' : 'Dossier'}
                   </span>
                   <div className="flex-1 h-px bg-white/10 max-w-[80px]" />
                 </div>
@@ -306,17 +319,31 @@ const AgentSlide = ({ agent, active, index, total }) => {
 
                 {/* Clearance + CTA */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-8">
-                  <a
-                    href="#contact"
-                    className={`group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-serif font-bold text-[10px] tracking-[0.15em] uppercase transition-all duration-500 ${
-                      isLive
-                        ? "bg-[#C48B68] text-black hover:bg-white hover:shadow-[0_0_40px_rgba(196,139,104,0.4)]"
-                        : "border border-[#E5CDB3]/40 text-[#E5CDB3] hover:bg-[#E5CDB3]/10"
-                    }`}
-                  >
-                    {isLive ? "Recruit Agent" : "Join Waitlist"}
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  {agent.codename === "VALERIA" ? (
+                    <Link
+                      to="/valeria"
+                      className={`group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-serif font-bold text-[10px] tracking-[0.15em] uppercase transition-all duration-500 ${
+                        isLive
+                          ? "bg-[#C48B68] text-black hover:bg-white hover:shadow-[0_0_40px_rgba(196,139,104,0.4)]"
+                          : "border border-[#E5CDB3]/40 text-[#E5CDB3] hover:bg-[#E5CDB3]/10"
+                      }`}
+                    >
+                      {isLive ? (lang === 'id' ? 'Lihat Muatan' : 'View Loadout') : (lang === 'id' ? 'Daftar Tunggu' : 'Join Waitlist')}
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  ) : (
+                    <a
+                      href="#contact"
+                      className={`group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-serif font-bold text-[10px] tracking-[0.15em] uppercase transition-all duration-500 ${
+                        isLive
+                          ? "bg-[#C48B68] text-black hover:bg-white hover:shadow-[0_0_40px_rgba(196,139,104,0.4)]"
+                          : "border border-[#E5CDB3]/40 text-[#E5CDB3] hover:bg-[#E5CDB3]/10"
+                      }`}
+                    >
+                      {isLive ? (lang === 'id' ? 'Rekrut Agen' : 'Recruit Agent') : (lang === 'id' ? 'Daftar Tunggu' : 'Join Waitlist')}
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -390,7 +417,7 @@ const AgentSlide = ({ agent, active, index, total }) => {
                   <div className="flex items-center justify-end gap-3 mb-3">
                     <div className="flex-1 h-px bg-white/10 max-w-[40px]" />
                     <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-white/50">
-                      Primary Integration
+                      {lang === 'id' ? 'Integrasi Utama' : 'Primary Integration'}
                     </span>
                   </div>
                   <div className="text-white text-xl font-serif tracking-wider uppercase flex items-center justify-end gap-2">
@@ -404,7 +431,7 @@ const AgentSlide = ({ agent, active, index, total }) => {
                   <div className="flex items-center justify-end gap-3 mb-3">
                     <div className="flex-1 h-px bg-white/10 max-w-[40px]" />
                     <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-white/50">
-                      System Capabilities
+                      {lang === 'id' ? 'Kemampuan Sistem' : 'System Capabilities'}
                     </span>
                   </div>
                   <div className="flex flex-col gap-2 items-end">
@@ -440,12 +467,14 @@ const AgentSlide = ({ agent, active, index, total }) => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const HeroCarousel = () => {
+  const { lang } = useLanguage();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 40 });
   const [selected, setSelected] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef(null);
   const progressRef = useRef(null);
 
+  const agents = getAgents(lang);
   const slides = [
     { type: "hero" },
     ...agents.map((a) => ({ type: "agent", agent: a })),
@@ -491,13 +520,14 @@ const HeroCarousel = () => {
           {slides.map((slide, i) => (
             <div key={i} className="flex-[0_0_100%] min-w-0 h-full">
               {slide.type === "hero" ? (
-                <ManifestoSlide active={selected === i} />
+                <ManifestoSlide active={selected === i} lang={lang} />
               ) : (
                 <AgentSlide
                   agent={slide.agent}
                   active={selected === i}
                   index={i}
                   total={total}
+                  lang={lang}
                 />
               )}
             </div>

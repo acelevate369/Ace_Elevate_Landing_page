@@ -2,7 +2,8 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
 import SpotlightCard from '../components/SpotlightCard';
-import ALL_PRODUCTS from '../data/products';
+import getProducts from '../data/products';
+import { useLanguage } from '../contexts/LanguageContext';
 
 /** Individual card wrapper that animates on scroll without breaking grid layout */
 const AnimatedGridItem = ({ children, index, className = '' }) => {
@@ -27,20 +28,31 @@ const AnimatedGridItem = ({ children, index, className = '' }) => {
 };
 
 const ArsenalSection = () => {
+    const { lang } = useLanguage();
+    const ALL_PRODUCTS = getProducts(lang);
+    
+    const t = {
+        tag: lang === 'id' ? 'Gudang Senjata' : 'The Arsenal',
+        title: lang === 'id' ? <>Temui Tenaga Kerja<br />AI Anda.</> : <>Meet Your<br />AI Workforce.</>,
+        desc: lang === 'id' 
+            ? 'Delapan agen khusus. Masing-masing menggantikan seluruh aplikasi, atau seluruh tim. Semuanya dari chat Anda.' 
+            : 'Eight specialized agents. Each replaces an entire app, or an entire team. All from your chat.',
+    };
+
     return (
         <section id="products" className="py-20 md:py-32 px-4 md:px-6 lg:px-12 relative z-10 bg-[#0A0A0A] border-y border-white/5" aria-label="AI Agent Products">
             <div className="max-w-[90rem] mx-auto">
                 <div className="mb-16 md:mb-20">
                     <ScrollReveal variant="fade-up" duration={0.6}>
-                        <p className="text-[#C48B68] tracking-[0.3em] text-[10px] font-bold uppercase mb-6 md:mb-8">The Arsenal</p>
+                        <p className="text-[#C48B68] tracking-[0.3em] text-[10px] font-bold uppercase mb-6 md:mb-8">{t.tag}</p>
                     </ScrollReveal>
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 md:gap-8">
                         <ScrollReveal variant="blur-up" duration={0.9} delay={0.1}>
-                            <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-gradient-accent leading-tight pb-2 max-w-3xl">Meet Your<br />AI Workforce.</h2>
+                            <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-gradient-accent leading-tight pb-2 max-w-3xl">{t.title}</h2>
                         </ScrollReveal>
                         <ScrollReveal variant="fade-up" delay={0.3}>
                             <p className="text-white/50 text-base md:text-lg max-w-md font-light pb-2">
-                                Eight specialized agents. Each replaces an entire app, or an entire team. All from your chat.
+                                {t.desc}
                             </p>
                         </ScrollReveal>
                     </div>
