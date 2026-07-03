@@ -57,11 +57,12 @@ const getAddons = (lang) => {
 const ValeriaPage = () => {
   const { lang } = useLanguage();
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingTier, setLoadingTier] = useState(null);
   const [toast, setToast] = useState({ show: false, message: '', type: 'error' });
+  const [checkoutModalData, setCheckoutModalData] = useState(null);
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   
   const showToast = (message, type = 'error') => {
     setToast({ show: true, message, type });
@@ -97,7 +98,7 @@ const ValeriaPage = () => {
     };
   }, []);
 
-  const handleCheckout = async (packageType, price, name, additionalData = null) => {
+  const handleCheckout = async (packageType, price, packageName, additionalData = null, userData = null) => {
     if (isLoading) return;
     setIsLoading(true);
     setLoadingTier(packageType);
@@ -108,6 +109,10 @@ const ValeriaPage = () => {
       if (packageType === 'core') variantUrl = 'https://aceelevate.lemonsqueezy.com/checkout/buy/e4345408-df5d-4f8c-97cc-e7d53dfc7485?embed=1&desc=0';
       if (packageType === 'standard') variantUrl = 'https://aceelevate.lemonsqueezy.com/checkout/buy/3854a35f-c5d5-4c43-a43d-a34945a2b62d?embed=1&desc=0';
       if (packageType === 'ultimate') variantUrl = 'https://aceelevate.lemonsqueezy.com/checkout/buy/eeaa00fa-4cb7-4569-9ac2-5f4097470910?embed=1&desc=0';
+
+      if (userData) {
+        variantUrl += `&checkout[email]=${encodeURIComponent(userData.email)}&checkout[name]=${encodeURIComponent(userData.name)}&checkout[custom][whatsapp]=${encodeURIComponent(userData.phone)}`;
+      }
 
       if (window.LemonSqueezy) {
         window.LemonSqueezy.Url.Open(variantUrl);
@@ -122,13 +127,13 @@ const ValeriaPage = () => {
       try {
         const edgeFunctionUrl = import.meta.env.VITE_SUPABASE_EDGE_FUNCTION_URL + '/pay';
         
-        // Dummy data for now since we don't have a form, or we can use default
+        // Data to send to Supabase Edge Function
         const orderData = {
           tierId: packageType,
           price: price,
-          name: name,
-          email: 'user@example.com', // In real app, prompt user or get from auth
-          phone: '08123456789',
+          name: userData?.name || 'Valeria User',
+          email: userData?.email || '',
+          phone: userData?.phone || '',
           addons: additionalData
         };
 
@@ -229,6 +234,15 @@ const ValeriaPage = () => {
       subtitle: (len) => lang === 'id' ? `Paket Standar: Pilih hingga 3 (${len}/3 terpilih)` : `Standard Package: Choose up to 3 (${len}/3 selected)`,
       cancel: lang === 'id' ? 'Batal' : 'Cancel',
       confirm: lang === 'id' ? 'Konfirmasi Konfigurasi' : 'Confirm Configuration'
+    },
+    checkout: {
+      title: lang === 'id' ? 'Identifikasi Klien' : 'Client Identification',
+      subtitle: lang === 'id' ? 'Masukkan data kontak untuk protokol onboarding agen Valeria.' : 'Enter contact data for Valeria agent onboarding protocol.',
+      name: lang === 'id' ? 'Nama Lengkap' : 'Full Name',
+      email: lang === 'id' ? 'Alamat Email' : 'Email Address',
+      phone: lang === 'id' ? 'Nomor WhatsApp / Telegram' : 'WhatsApp / Telegram Number',
+      proceed: lang === 'id' ? 'Lanjutkan ke Pembayaran' : 'Proceed to Payment',
+      req: lang === 'id' ? 'Harap isi semua kolom data.' : 'Please fill in all data fields.'
     }
   };
 
@@ -408,7 +422,7 @@ const ValeriaPage = () => {
               </ul>
               
               <button 
-                onClick={() => handleCheckout('core', t.tier1.price, t.tier1.name)}
+                onClick={() => setCheckoutModalData({ packageType: 'core', price: t.tier1.price, name: t.tier1.name, addons: null })}
                 disabled={isLoading}
                 className="w-full mt-auto py-4 rounded-xl border border-white/10 text-white font-mono text-xs tracking-widest uppercase hover:bg-white/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
@@ -530,7 +544,7 @@ const ValeriaPage = () => {
                     </div>
                   </div>
                   <button 
-                    onClick={() => handleCheckout('ultimate', t.tier3.price, t.tier3.name)}
+                    onClick={() => setCheckoutModalData({ packageType: 'ultimate', price: t.tier3.price, name: t.tier3.name, addons: null })}
                     disabled={isLoading}
                     className="group relative w-full overflow-hidden rounded-xl bg-[#C48B68] px-8 py-5 text-black font-mono text-sm font-bold tracking-widest uppercase hover:scale-[1.02] transition-transform duration-300 shadow-[0_0_20px_rgba(196,139,104,0.3)] hover:shadow-[0_0_40px_rgba(196,139,104,0.5)] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
                   >
@@ -633,7 +647,10 @@ const ValeriaPage = () => {
                   <button 
                     disabled={selectedAddons.length === 0 || isLoading}
                     onClick={() => {
-                      if(!isLoading) handleCheckout('standard', t.tier2.price, t.tier2.name, selectedAddons);
+                      if(!isLoading) {
+                        setIsModalOpen(false);
+                        setCheckoutModalData({ packageType: 'standard', price: t.tier2.price, name: t.tier2.name, addons: selectedAddons });
+                      }
                     }}
                     className={`px-8 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2 ${
                       selectedAddons.length > 0 && !isLoading
@@ -647,6 +664,109 @@ const ValeriaPage = () => {
                       t.modal.confirm
                     )}
                   </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ─────────────────────────────────────────────────────────────────────────────
+          CHECKOUT FORM MODAL
+          ───────────────────────────────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {checkoutModalData && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => { if(!isLoading) setCheckoutModalData(null); }}
+              className="absolute inset-0 bg-[#050404]/80 backdrop-blur-md"
+            />
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-[#080707] border border-[#C48B68]/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+            >
+              <div className="p-6 border-b border-white/5 flex justify-between items-center bg-[#050404]">
+                <div>
+                  <h3 className="text-xl font-serif font-bold text-white">{t.checkout.title}</h3>
+                  <p className="text-white/50 font-mono text-[9px] uppercase tracking-widest mt-1">
+                    {t.checkout.subtitle}
+                  </p>
+                </div>
+                {!isLoading && (
+                  <button onClick={() => setCheckoutModalData(null)} className="text-white/50 hover:text-white transition-colors p-2 bg-white/5 rounded-full hover:bg-white/10">
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+
+              <div className="p-6 flex flex-col gap-5">
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-mono text-[#C48B68] uppercase tracking-widest">{t.checkout.name}</label>
+                  <input 
+                    type="text" 
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    placeholder="John Doe"
+                    disabled={isLoading}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C48B68]/50 transition-colors placeholder:text-white/20 disabled:opacity-50"
+                  />
+                </div>
+                
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-mono text-[#C48B68] uppercase tracking-widest">{t.checkout.email}</label>
+                  <input 
+                    type="email" 
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    placeholder="agent@example.com"
+                    disabled={isLoading}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C48B68]/50 transition-colors placeholder:text-white/20 disabled:opacity-50"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-mono text-[#C48B68] uppercase tracking-widest">{t.checkout.phone}</label>
+                  <input 
+                    type="tel" 
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    placeholder="+62 812 3456 7890"
+                    disabled={isLoading}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C48B68]/50 transition-colors placeholder:text-white/20 disabled:opacity-50"
+                  />
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-white/5 bg-[#050404]">
+                <button 
+                  disabled={isLoading}
+                  onClick={() => {
+                    if(!formData.name || !formData.email || !formData.phone) {
+                      showToast(t.checkout.req);
+                      return;
+                    }
+                    handleCheckout(
+                      checkoutModalData.packageType, 
+                      checkoutModalData.price, 
+                      checkoutModalData.name, 
+                      checkoutModalData.addons,
+                      formData
+                    );
+                  }}
+                  className="w-full group relative overflow-hidden rounded-xl bg-[#C48B68] px-8 py-4 text-black font-mono text-xs font-bold tracking-widest uppercase hover:scale-[1.02] transition-transform duration-300 shadow-[0_0_20px_rgba(196,139,104,0.3)] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                >
+                  <div className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full group-hover:animate-[shimmer_1s_forwards]" />
+                  {isLoading ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> {t.loadingPayment}</>
+                  ) : (
+                    t.checkout.proceed
+                  )}
+                </button>
               </div>
             </motion.div>
           </div>
